@@ -5,7 +5,7 @@ import SpotifyService from 'services/SpotifyApi';
 import { useToast } from 'context/ToastContext';
 
 export default function useApi() {
-	const { spotifyApiKey, setSpotifyApiKey, spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken } = useContext(SpotifyContext);
+	const { spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken } = useContext(SpotifyContext);
 	const { deezerApiKey, setDeezerApiKey } = useContext(DeezerContext);
 	const [error, setError] = useState(null);
 	const { showToast } = useToast();
@@ -16,30 +16,12 @@ export default function useApi() {
 		}
 	}, [spotifyToken])
 	
-	const saveApis = () => {
-		if (spotifyApiKey && deezerApiKey) {
-			sessionStorage.setItem('deezerApiKey', deezerApiKey);
-			sessionStorage.setItem('spotifyApiKey', spotifyApiKey);
-		} else {
-			console.log('error apis');
-			setError('error');
-		}
-	};
-
-	const saveTokens = () => {
-		if (spotifyToken) {
-			console.log(spotifyToken)
-			sessionStorage.setItem('spotifyToken', spotifyToken);
-		} else {
-			console.log('error apis');
-			setError('error');
-		}
-	};
 
 	const saveTokenSpotify=(token) =>{
 		setSpotifyToken(token);
 		sessionStorage.setItem('spotifyToken', token);
 	}
+
 	const clearData = () => {
 		sessionStorage.removeItem('spotifyToken');
 		setSpotifyToken('');
@@ -70,5 +52,5 @@ export default function useApi() {
 			});
 	};
 
-	return { saveApis, spotifyApiKey, setSpotifyApiKey, deezerApiKey, setDeezerApiKey, error, spotifyPlaylists, getSpotifyPlaylists, saveTokens, spotifyToken, setSpotifyToken, saveTokenSpotify };
+	return { deezerApiKey, setDeezerApiKey, error, spotifyPlaylists, getSpotifyPlaylists,  spotifyToken, setSpotifyToken, saveTokenSpotify };
 }

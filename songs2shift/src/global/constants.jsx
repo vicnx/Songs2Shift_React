@@ -10,5 +10,10 @@ export const CONSTANTS = {
   characters: {
     slash: '/',
     hash: '#'
+  },
+  routes:{
+    base: '/',
+    home:'/home',
+    login: '/login'
   }
 }

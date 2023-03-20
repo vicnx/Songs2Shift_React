@@ -5,29 +5,33 @@ import useApi from 'hooks/useApi';
 import { Suspense, useEffect } from 'react';
 
 import Loading from 'components/Loading';
-import { CONSTANTS } from 'global/constants';
 import { globalFunctions } from 'global/functions';
+import { SSmenubar } from 'components/SS_MenuBar/ss_menubar';
+import SSSidebar from 'components/ss_sidebar';
+import { CONSTANTS } from 'global/constants';
 function App() {
 	const { spotifyToken, saveTokenSpotify } = useApi();
 
 	useEffect(() => {
 		checkSpotifyLogin(saveTokenSpotify);
-	}, [window.location.hash])
-	
+	}, [window.location.hash]);
+
 	return (
 		<>
 			<Suspense fallback={<Loading loading={true} />}>
 				<HashRouter>
+					<SSmenubar />
+					<SSSidebar/>
 					<Routes>
 						{spotifyToken ? (
 							<>
-								<Route path="/home" element={<ConvertPage />} />
-								<Route path="*" element={<Navigate to="/home" replace />} />
+								<Route path={CONSTANTS.routes.home} element={<ConvertPage />} />
+								<Route path="*" element={<Navigate to={CONSTANTS.routes.home} replace />} />
 							</>
 						) : (
 							<>
-								<Route path="/login" element={<Login />} />
-								<Route path="*" element={<Navigate to="/login" replace />} />
+								<Route path={CONSTANTS.routes.login} element={<Login />} />
+								<Route path="*" element={<Navigate to={CONSTANTS.routes.login} replace />} />
 							</>
 						)}
 					</Routes>
@@ -37,12 +41,12 @@ function App() {
 	);
 }
 
-const checkSpotifyLogin = async (saveTokenSpotify) =>{
-	if(window.location.hash.includes('access_token')){
+const checkSpotifyLogin = async (saveTokenSpotify) => {
+	if (window.location.hash.includes('access_token')) {
 		let token = await globalFunctions.getHashToken();
-		saveTokenSpotify(token); 
-		window.location.href = '/#/home';
+		saveTokenSpotify(token);
+		window.location.href = CONSTANTS.routes.base;
 	}
-}
+};
 
 export default App;
