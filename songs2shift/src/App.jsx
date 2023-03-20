@@ -6,7 +6,7 @@ import { Suspense, useEffect } from 'react';
 
 import Loading from 'components/Loading';
 import { globalFunctions } from 'global/functions';
-import { SSmenubar } from 'components/SS_MenuBar/ss_menubar';
+import { SSMenubar } from 'components/SS_MenuBar/ss_menubar';
 import SSSidebar from 'components/ss_sidebar';
 import { CONSTANTS } from 'global/constants';
 function App() {
@@ -20,21 +20,23 @@ function App() {
 		<>
 			<Suspense fallback={<Loading loading={true} />}>
 				<HashRouter>
-					<SSmenubar />
-					<SSSidebar/>
-					<Routes>
-						{spotifyToken ? (
-							<>
+					{spotifyToken ? (
+						<>
+							<SSMenubar />
+							<SSSidebar />
+							<Routes>
 								<Route path={CONSTANTS.routes.home} element={<ConvertPage />} />
 								<Route path="*" element={<Navigate to={CONSTANTS.routes.home} replace />} />
-							</>
-						) : (
-							<>
+							</Routes>
+						</>
+					) : (
+						<>
+							<Routes>
 								<Route path={CONSTANTS.routes.login} element={<Login />} />
 								<Route path="*" element={<Navigate to={CONSTANTS.routes.login} replace />} />
-							</>
-						)}
-					</Routes>
+							</Routes>
+						</>
+					)}
 				</HashRouter>
 			</Suspense>
 		</>

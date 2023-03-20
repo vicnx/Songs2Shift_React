@@ -6,6 +6,7 @@ import './LoginSpotify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify } from '@fortawesome/free-brands-svg-icons';
 import { CONSTANTS } from 'global/constants';
+import logo from "assets/logo.png";
 
 const authEndpoint = CONSTANTS.Spotify.authEndpoint;
 const clientId = CONSTANTS.Spotify.REACT_CLIENT_ID;
@@ -17,7 +18,8 @@ const Login = () => {
     window.location = `${authEndpoint}?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scopes.join('%20')}&response_type=token`;
   };
   return (
-    <div className="flex justify-content-center align-items-center login-page">
+    <div className="flex flex-column justify-content-center align-items-center login-page">
+      <img className='logo' src={logo} alt={CONSTANTS.title}/>
       <Panel header="LOGIN CON SPOTIFY" style={{ width: '400px' }}>
         <p>Por favor, inicia sesión con tu cuenta de Spotify para poder utilizar nuestra aplicación.</p>
         <Button className="p-button-raised p-button-rounded" onClick={handleLogin}>

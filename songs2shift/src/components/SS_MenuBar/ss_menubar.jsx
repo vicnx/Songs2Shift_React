@@ -2,8 +2,11 @@ import { Menubar } from 'primereact/menubar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify, faDeezer } from '@fortawesome/free-brands-svg-icons';
 import './ss_menubar.css'
-export const SSmenubar = () =>{
-  const start = <h3>Song2Shift</h3>;
+import { CONSTANTS } from 'global/constants';
+import logo from "assets/logo.png";
+
+export const SSMenubar = () =>{
+  const start = <img className='menu-logo' src={logo} alt={CONSTANTS.title}/>;
   const end = (
     <> 
     <span style={{ marginRight: 10 }}>Aplicaciones conectadas:</span>
