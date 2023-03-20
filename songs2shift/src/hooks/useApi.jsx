@@ -3,19 +3,15 @@ import SpotifyContext from 'context/SpotifyContext';
 import DeezerContext from 'context/DeezerContext';
 import SpotifyService from 'services/SpotifyApi';
 import { useToast } from 'context/ToastContext';
-import { useNavigate } from 'react-router';
 
 export default function useApi() {
-	const navigate = useNavigate();
 	const { spotifyApiKey, setSpotifyApiKey, spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken } = useContext(SpotifyContext);
 	const { deezerApiKey, setDeezerApiKey } = useContext(DeezerContext);
 	const [error, setError] = useState(null);
 	const { showToast } = useToast();
 
 	useEffect(() => {
-		console.log('useeffect');
 		if(!spotifyToken){
-			console.log('!spotifyToken');
 			checkSession('spotify');
 		}
 	}, [spotifyToken])
@@ -70,7 +66,7 @@ export default function useApi() {
 			.catch((error) => {
 				showToast(error.message, 'error');
 				clearData();
-				navigate('/');
+				// window.location.href = '/login'
 			});
 	};
 
