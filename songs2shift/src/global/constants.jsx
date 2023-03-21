@@ -6,7 +6,8 @@ export const CONSTANTS = {
     types:{
       spotifyToken: 'spotifyToken',
       deezerToken: 'deezerToken',
-      spotifyUserData: 'spotifyUserData' 
+      spotifyUserData: 'spotifyUserData', 
+      deezerUserData: 'deezerUserData' 
     }
   },
   Spotify:{
@@ -34,5 +35,8 @@ export const CONSTANTS = {
     home:'/home',
     login: '/login',
     loginDeezer: 'loginDeezer'
+  },
+  proxy:{
+    url:'https://cors-anywhere.herokuapp.com/'
   }
 }

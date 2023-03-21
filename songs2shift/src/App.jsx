@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Route, Routes, Navigate, HashRouter, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
 import ConvertPage from './pages/ConvertPage';
-import Login from 'pages/LoginSpotify';
+import Login from 'pages/LoginSpotify/LoginSpotify';
 import useApi from 'hooks/useApi';
 import { Suspense, useEffect } from 'react';
 

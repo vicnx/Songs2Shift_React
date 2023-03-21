@@ -5,10 +5,11 @@ import SpotifyService from 'services/SpotifyApi';
 import { useToast } from 'context/ToastContext';
 import { CONSTANTS } from 'global/constants';
 import { globalFunctions } from 'global/functions';
+import DeezerService from 'services/DeezerApi';
 
 export default function useApi() {
 	const { spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken, spotifyUserData, setSpotifyUserData } = useContext(SpotifyContext);
-	const { deezerToken, setDeezerToken } = useContext(DeezerContext);
+	const { deezerToken, setDeezerToken, deezerUserData, setDeezerUserData } = useContext(DeezerContext);
 	const [error, setError] = useState(null);
 	const { showToast } = useToast();
 
@@ -30,6 +31,26 @@ export default function useApi() {
 					};
 					setSpotifyUserData(userData);
 					sessionStorage.setItem(CONSTANTS.session.types.spotifyUserData, JSON.stringify(userData));
+				})
+				.catch((error) => {
+					showToast(error.message, 'error');
+				});
+		}
+	};
+
+	const getUserInfoDeezer = (token) => {
+		if (!checkSession(CONSTANTS.session.types.deezerUserData)) {
+			DeezerService.getUserData(token)
+				.then((res) => {
+					console.log({ res });
+					const userData = {
+						name: res.name,
+						image: res.picture,
+						link: res.link,
+						id: res.id,
+					};
+					setDeezerUserData(userData);
+					sessionStorage.setItem(CONSTANTS.session.types.deezerUserData, JSON.stringify(userData));
 				})
 				.catch((error) => {
 					showToast(error.message, 'error');
@@ -70,6 +91,15 @@ export default function useApi() {
 				}
 				// eslint-disable-next-line no-unreachable
 				break;
+			case CONSTANTS.session.types.deezerUserData:
+				if (sessionStorage.getItem(CONSTANTS.session.types.deezerUserData)) {
+					setDeezerUserData(JSON.parse(sessionStorage.getItem(CONSTANTS.session.types.deezerUserData)));
+					return true;
+				} else {
+					return false;
+				}
+				// eslint-disable-next-line no-unreachable
+				break;
 			default:
 				break;
 		}
@@ -87,5 +117,18 @@ export default function useApi() {
 			});
 	};
 
-	return { deezerToken, setDeezerToken, error, spotifyPlaylists, getSpotifyPlaylists, spotifyToken, setSpotifyToken, saveTokenSpotify, getUserInfoSpotify, spotifyUserData, saveTokenDeezer };
+	return {
+		deezerToken,
+		setDeezerToken,
+		error,
+		spotifyPlaylists,
+		getSpotifyPlaylists,
+		spotifyToken,
+		setSpotifyToken,
+		saveTokenSpotify,
+		getUserInfoSpotify,
+		spotifyUserData,
+		saveTokenDeezer,
+		getUserInfoDeezer,
+	};
 }

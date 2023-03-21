@@ -8,7 +8,7 @@ import useApi from 'hooks/useApi';
 
 const SSSidebarMenu = () => {
   const [visible, setVisible] = useState(false);
-	const { spotifyUserData ,getUserInfoSpotify, spotifyToken } = useApi();
+	const { spotifyUserData ,getUserInfoSpotify, spotifyToken, deezerToken, getUserInfoDeezer } = useApi();
 
 
   useEffect(() => {
@@ -17,6 +17,13 @@ const SSSidebarMenu = () => {
       getUserInfoSpotify(spotifyToken);
 		}
 	}, [spotifyToken]);
+
+  useEffect(() => {
+    if(deezerToken){
+      getUserInfoDeezer(deezerToken)
+    }
+  }, [deezerToken])
+  
 
   const toggleMenu = () => {
     setVisible(prevState => !prevState);
