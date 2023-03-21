@@ -1,19 +1,29 @@
 
-import { REACT_CLIENT_ID, REACT_REDIRECT_URI } from 'apis/apis';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, DEEZER_CLIENT_ID, DEEZER_REDIRECT_URI, DEEZER_CLIENT_SECRET } from 'apis/apis';
 export const CONSTANTS = {
   title:'Songs2Shift',
   session:{
     types:{
       spotifyToken: 'spotifyToken',
+      deezerToken: 'deezerToken',
       spotifyUserData: 'spotifyUserData' 
     }
   },
   Spotify:{
     apiUrl: 'https://api.spotify.com/v1',
     authEndpoint: 'https://accounts.spotify.com/authorize',
-    REACT_CLIENT_ID: REACT_CLIENT_ID,
-    REACT_REDIRECT_URI: REACT_REDIRECT_URI,
+    SPOTIFY_CLIENT_ID: SPOTIFY_CLIENT_ID,
+    SPOTIFY_REDIRECT_URI: SPOTIFY_REDIRECT_URI,
     scopes: ['user-read-private'],
+    source: 'spotify'
+
+  },
+  Deezer:{
+    apiUrl: 'https://api.deezer.com',
+    DEEZER_CLIENT_ID: DEEZER_CLIENT_ID,
+    DEEZER_REDIRECT_URI: DEEZER_REDIRECT_URI,
+    DEEZER_CLIENT_SECRET: DEEZER_CLIENT_SECRET,
+    source: 'deezer'
   },
   characters: {
     slash: '/',
@@ -22,6 +32,7 @@ export const CONSTANTS = {
   routes:{
     base: '/',
     home:'/home',
-    login: '/login'
+    login: '/login',
+    loginDeezer: 'loginDeezer'
   }
 }

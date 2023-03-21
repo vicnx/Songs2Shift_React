@@ -1,22 +1,24 @@
-const API_URL = "https://api.deezer.com";
+import { CONSTANTS } from "global/constants";
+import axios from 'axios';
 
-export async function convertPlaylist(token, playlistId) {
-  const response = await fetch(`${API_URL}/playlist/${playlistId}/tracks`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      playlist_id: playlistId,
-    }),
-  });
+const DeezerService = {
+  // async getDeezerToken(token) {
+  //   try {
+  //     const response = await axios.get(`${CONSTANTS.Spotify.apiUrl}/me`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     return response.data;
+  //   } catch (error) {
+  //     const err = {
+  //       status: error.response.status,
+  //       message: 'Vuelve a autenticarte en Spotify para continuar.'
+  //     };
+  //     console.log({ err });
+  //     throw err;
+  //   }
+  // }
+};
 
-  const data = await response.json();
-
-  if (response.ok) {
-    return data;
-  } else {
-    throw new Error(data.error.message);
-  }
-}
+export default DeezerService;

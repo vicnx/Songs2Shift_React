@@ -1,0 +1,13 @@
+.login-page{
+  background-color: rgb(46, 103, 54);
+  background-image: linear-gradient(rgb(43, 110, 53), rgb(4, 11, 5) 85%);
+  height: 100vh;
+}
+
+.login-page .logo{
+  width: 300px;
+  margin-top: -15%;
+  margin-bottom: -2%;
+  -webkit-filter: drop-shadow(2px 2px 2px #222);
+  filter: drop-shadow(2px 2px 2px #222);
+}
