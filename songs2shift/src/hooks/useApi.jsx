@@ -40,7 +40,7 @@ export default function useApi() {
 
 	const getUserInfoDeezer = (token) => {
 		if (!checkSession(CONSTANTS.session.types.deezerUserData)) {
-			DeezerService.getUserData(token)
+			DeezerService.getUserDataJSONP(token)
 				.then((res) => {
 					console.log({ res });
 					const userData = {
