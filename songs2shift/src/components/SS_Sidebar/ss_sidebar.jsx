@@ -1,10 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from 'primereact/button';
 import { Sidebar } from 'primereact/sidebar';
 import { Avatar } from 'primereact/avatar';
+import './ss_sidebar.css'
+import { Divider } from 'primereact/divider';
+import useApi from 'hooks/useApi';
 
 const SSSidebarMenu = () => {
   const [visible, setVisible] = useState(false);
+	const { spotifyUserData ,getUserInfoSpotify, spotifyToken } = useApi();
+
+
+  useEffect(() => {
+		// Comprobamos que existe el token de spotify para sacar las playlist.
+		if (spotifyToken) {
+      getUserInfoSpotify(spotifyToken);
+		}
+	}, [spotifyToken]);
 
   const toggleMenu = () => {
     setVisible(prevState => !prevState);
@@ -14,12 +26,12 @@ const SSSidebarMenu = () => {
     {
       label: 'Home',
       icon: 'pi pi-fw pi-home',
-      className: 'p-button-lg p-button-text'
+      className: 'sidebar-item p-button-lg p-button-text w-full'
     },
     {
       label: 'Ajustes',
       icon: 'pi pi-fw pi-cog',
-      className: 'p-button-lg p-button-text'
+      className: 'sidebar-item p-button-lg p-button-text w-full'
     },
   ];
 
@@ -38,11 +50,11 @@ const SSSidebarMenu = () => {
         className="p-sidebar-menu"
       >
         <div className="p-d-flex p-flex-column p-ai-center">
-          <div className="p-mt-4 p-d-flex p-flex-column p-ai-center">
-          <Avatar label="JS" size="xlarge" shape="circle" style={{ marginBottom: '1rem' }} />
-
-            <h4 className="p-mt-2 p-mb-0">Nombre de usuario</h4>
+          <div className="sidebar-header p-mt-4 p-d-flex p-flex-column p-ai-center">
+            <Avatar image={spotifyUserData.image} label={spotifyUserData.initials} size="xlarge" shape="circle" style={{ marginBottom: '1rem' }} />
+            <h4 className="p-mt-2 p-mb-0">{spotifyUserData.name}</h4>
           </div>
+          <Divider />
           <div className="p-mt-6">
             {items.map((item, index) => (
               <Button

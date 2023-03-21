@@ -16,6 +16,7 @@ const ConvertPage = () => {
 		if (!spotifyToken) {
 			navigate('/login');
 		} else {
+			// getUserInfoSpotify();
 			getSpotifyPlaylists();
 		}
 	}, [spotifyToken]);

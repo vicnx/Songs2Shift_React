@@ -2,7 +2,14 @@
 import { REACT_CLIENT_ID, REACT_REDIRECT_URI } from 'apis/apis';
 export const CONSTANTS = {
   title:'Songs2Shift',
+  session:{
+    types:{
+      spotifyToken: 'spotifyToken',
+      spotifyUserData: 'spotifyUserData' 
+    }
+  },
   Spotify:{
+    apiUrl: 'https://api.spotify.com/v1',
     authEndpoint: 'https://accounts.spotify.com/authorize',
     REACT_CLIENT_ID: REACT_CLIENT_ID,
     REACT_REDIRECT_URI: REACT_REDIRECT_URI,

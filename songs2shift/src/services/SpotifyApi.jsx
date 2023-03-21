@@ -1,40 +1,40 @@
-const API_URL = 'https://api.spotify.com/v1';
-
-// export async function getPlaylists(token) {
-// 	const response = await fetch(`${API_URL}/me/playlists`, {
-// 		headers: {
-// 			Authorization: `Bearer ${token}`,
-// 		},
-// 	});
-
-// 	const data = await response.json();
-// 	return data;
-// 	if (response.ok) {
-// 		return data.items;
-// 	} else {
-// 		throw new Error(data.error.message);
-// 	}
-// }
+import { CONSTANTS } from "global/constants";
+import axios from 'axios';
 
 const SpotifyService = {
-	async getPlaylists(token) {
-		const response = await fetch(`${API_URL}/me/playlists`, {
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-    if (!response.ok) {
-      const error = {
-        status: response.status,
+  async getPlaylists(token) {
+    try {
+      const response = await axios.get(`${CONSTANTS.Spotify.apiUrl}/me/playlists`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const err = {
+        status: error.response.status,
         message: 'Vuelve a autenticarte en Spotify para continuar.'
       };
-      console.log({error})
-      throw error;
+      throw err;
     }
-    const data = await response.json();
-
-    return data;
-	},
+  },
+  async getUserData(token) {
+    try {
+      const response = await axios.get(`${CONSTANTS.Spotify.apiUrl}/me`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      const err = {
+        status: error.response.status,
+        message: 'Vuelve a autenticarte en Spotify para continuar.'
+      };
+      console.log({ err });
+      throw err;
+    }
+  }
 };
 
 export default SpotifyService;

@@ -3,42 +3,70 @@ import SpotifyContext from 'context/SpotifyContext';
 import DeezerContext from 'context/DeezerContext';
 import SpotifyService from 'services/SpotifyApi';
 import { useToast } from 'context/ToastContext';
+import { CONSTANTS } from 'global/constants';
+import { globalFunctions } from 'global/functions';
 
 export default function useApi() {
-	const { spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken } = useContext(SpotifyContext);
+	const { spotifyPlaylists, setSpotifyPlaylists, spotifyToken, setSpotifyToken, spotifyUserData, setSpotifyUserData } = useContext(SpotifyContext);
 	const { deezerApiKey, setDeezerApiKey } = useContext(DeezerContext);
 	const [error, setError] = useState(null);
 	const { showToast } = useToast();
 
 	useEffect(() => {
-		if(!spotifyToken){
-			checkSession('spotify');
+		if (!spotifyToken) {
+			checkSession(CONSTANTS.session.types.spotifyToken);
 		}
-	}, [spotifyToken])
-	
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [spotifyToken]);	
 
-	const saveTokenSpotify=(token) =>{
+	const getUserInfoSpotify = (token) => {
+		if(!checkSession(CONSTANTS.session.types.spotifyUserData)){
+			SpotifyService.getUserData(token)
+			.then((res) => {
+				const userData = {
+					name: res.display_name,
+					image: res.images[0].url,
+					initials: globalFunctions.getInitials(res.display_name)
+				}
+				setSpotifyUserData(userData);
+				sessionStorage.setItem(CONSTANTS.session.types.spotifyUserData,JSON.stringify(userData))
+			})
+			.catch((error) => {
+				showToast(error.message, 'error');
+			});
+		}
+	};
+
+	const saveTokenSpotify = async (token) => {
 		setSpotifyToken(token);
-		sessionStorage.setItem('spotifyToken', token);
-	}
+		sessionStorage.setItem(CONSTANTS.session.types.spotifyToken, token);
+	};
 
 	const clearData = () => {
-		sessionStorage.removeItem('spotifyToken');
+		sessionStorage.removeItem(CONSTANTS.session.types.spotifyToken);
 		setSpotifyToken('');
 	};
 
-	const checkSession = (type)=>{
+	const checkSession = (type) => {
 		switch (type) {
-			case 'spotify':
-				if(sessionStorage.getItem(spotifyToken)){
-					setSpotifyToken(sessionStorage.getItem(spotifyToken))
+			case CONSTANTS.session.types.spotifyToken:
+				if (sessionStorage.getItem(CONSTANTS.session.types.spotifyToken)) {
+					setSpotifyToken(sessionStorage.getItem(CONSTANTS.session.types.spotifyToken));
 				}
 				break;
-		
+			case CONSTANTS.session.types.spotifyUserData:
+				if (sessionStorage.getItem(CONSTANTS.session.types.spotifyUserData)) {
+					setSpotifyUserData(JSON.parse(sessionStorage.getItem(CONSTANTS.session.types.spotifyUserData)));
+					return true;
+				}else{
+					return false;
+				}
+				// eslint-disable-next-line no-unreachable
+				break;
 			default:
 				break;
 		}
-	}
+	};
 
 	const getSpotifyPlaylists = () => {
 		SpotifyService.getPlaylists(spotifyToken)
@@ -52,5 +80,5 @@ export default function useApi() {
 			});
 	};
 
-	return { deezerApiKey, setDeezerApiKey, error, spotifyPlaylists, getSpotifyPlaylists,  spotifyToken, setSpotifyToken, saveTokenSpotify };
+	return { deezerApiKey, setDeezerApiKey, error, spotifyPlaylists, getSpotifyPlaylists, spotifyToken, setSpotifyToken, saveTokenSpotify, getUserInfoSpotify, spotifyUserData };
 }

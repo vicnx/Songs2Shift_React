@@ -13,4 +13,7 @@ export const globalFunctions = {
 			}, {});
 			return token?.access_token;
 	},
+	getInitials(name) {
+		return name.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
+	}
 };

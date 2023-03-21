@@ -7,8 +7,9 @@ import { Suspense, useEffect } from 'react';
 import Loading from 'components/Loading';
 import { globalFunctions } from 'global/functions';
 import { SSMenubar } from 'components/SS_MenuBar/ss_menubar';
-import SSSidebar from 'components/ss_sidebar';
+import SSSidebar from 'components/SS_Sidebar/ss_sidebar';
 import { CONSTANTS } from 'global/constants';
+import SpotifyService from 'services/SpotifyApi';
 function App() {
 	const { spotifyToken, saveTokenSpotify } = useApi();
 
@@ -46,8 +47,10 @@ function App() {
 const checkSpotifyLogin = async (saveTokenSpotify) => {
 	if (window.location.hash.includes('access_token')) {
 		let token = await globalFunctions.getHashToken();
-		saveTokenSpotify(token);
-		window.location.href = CONSTANTS.routes.base;
+		saveTokenSpotify(token).then((data)=>{
+			console.log(data)
+			window.location.href = CONSTANTS.routes.base;
+		})
 	}
 };
 
