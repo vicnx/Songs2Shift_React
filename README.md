@@ -1,17 +1,16 @@
 # 🎶 Songs2Shift
-
-<img src="images/logo.png" alt="Songs2Shift logo" width="300"/>
-
-> Una aplicación web para convertir listas de reproducción de Spotify a otras plataformas de música 🎧
-
 [![React](https://img.shields.io/badge/React-v17.0.2-blue)](https://es.reactjs.org/)
 [![PrimeReact](https://img.shields.io/badge/PrimeReact-v6.5.3-blue)](https://www.primefaces.org/primereact/)
 [![PrimeFlex](https://img.shields.io/badge/PrimeFlex-v3.0.0-blue)](https://www.primefaces.org/primeflex/)
 [![FontAwesome](https://img.shields.io/badge/FontAwesome-v5.15.4-blue)](https://fontawesome.com/)
 [![fetchJSONP](https://img.shields.io/badge/fetchJSONP-v1.1.3-blue)](https://github.com/camsong/fetch-jsonp)
 [![axios](https://img.shields.io/badge/axios-v0.21.1-blue)](https://github.com/axios/axios)
-![GitHub stars](https://img.shields.io/github/stars/vicnx/Music_converter_React)
-=
+
+<img src="images/logo.png" alt="Songs2Shift logo" width="300"/>
+
+> Una aplicación web para convertir listas de reproducción de Spotify a otras plataformas de música 🎧
+
+
 
 
 ## 📝 Sobre el proyecto
