@@ -8,6 +8,8 @@
 
 <img src="images/logo.png" alt="Songs2Shift logo" width="300"/>
 
+> 🚧 Este proyecto se encuentra actualmente en desarrollo. 🚧
+
 > Una aplicación web para convertir listas de reproducción de Spotify a otras plataformas de música 🎧
 
 

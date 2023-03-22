@@ -1,6 +1,4 @@
-import { Route, Routes, Navigate, HashRouter } from 'react-router-dom';
-import ConvertPage from './pages/ConvertPage';
-import Login from 'pages/LoginSpotify/LoginSpotify';
+import { HashRouter } from 'react-router-dom';
 import useApi from 'hooks/useApi';
 import { Suspense, useEffect } from 'react';
 
@@ -9,9 +7,11 @@ import { globalFunctions } from 'global/functions';
 import { SSMenubar } from 'components/SS_MenuBar/ss_menubar';
 import SSSidebar from 'components/SS_Sidebar/ss_sidebar';
 import { CONSTANTS } from 'global/constants';
-import LoginDeezer from 'pages/LoginDeezer/LoginDeezer';
+import SSRouter from 'router';
+
 function App() {
 	const { spotifyToken, deezerToken, saveTokenSpotify, saveTokenDeezer } = useApi();
+	const isAuthenticated = spotifyToken ? true : false;
 
 	useEffect(() => {
 		const queryString = window.location.search;
@@ -34,30 +34,12 @@ function App() {
 	}, [window.location.hash]);
 
 	return (
-		<>
-			<Suspense fallback={<Loading loading={true} />}>
-				<HashRouter>
-					{spotifyToken ? (
-						<>
-							<SSMenubar />
-							<SSSidebar />
-							<Routes>
-								<Route path={CONSTANTS.routes.home} element={<ConvertPage />} />
-								<Route path={CONSTANTS.routes.loginDeezer} element={<LoginDeezer />} />
-								<Route path="*" element={<Navigate to={CONSTANTS.routes.home} replace />} />
-							</Routes>
-						</>
-					) : (
-						<>
-							<Routes>
-								<Route path={CONSTANTS.routes.login} element={<Login />} />
-								<Route path="*" element={<Navigate to={CONSTANTS.routes.login} replace />} />
-							</Routes>
-						</>
-					)}
-				</HashRouter>
-			</Suspense>
-		</>
+		<Suspense fallback={<Loading loading={true} />}>
+			<HashRouter>
+			<ShowMenuSidebar visible={isAuthenticated}/>
+				<SSRouter isAuthenticated={isAuthenticated} />
+			</HashRouter>
+		</Suspense>
 	);
 }
 
@@ -79,5 +61,11 @@ const checkDeezerLogin = async (saveTokenDeezer) => {
 		});
 	}
 };
+
+const ShowMenuSidebar = ({visible}) =>{
+	return(
+		visible? <><SSMenubar/> <SSSidebar/></>: null
+	)
+}
 
 export default App;
